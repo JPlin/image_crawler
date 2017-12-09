@@ -1,0 +1,14 @@
+## Topic Format 	: [topic]:[keyword1],[keyword1],...
+## Keyword Format 	: keyword
+
+ID picture
+# ID photo
+# selfie
+# figure
+# portrait
+# face
+# woman
+# man
+# handsome
+# hair
+# beauty
