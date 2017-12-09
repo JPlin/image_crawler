@@ -37,10 +37,10 @@
 
 ## 目录结构
 
-  ./images : 存放图片的地方，可以在params.cfg 中进行修改
-  ./images/每个 keyword 对应一个文件夹
-  ./module : 搜索引擎模块
-  ./tempolate : 网页模板
-  ./keyword.txt : 搜索关键字
-  ./params.cfg : 爬虫配置项
-  ./url.db : SQlite3 数据库文件
+  * ./images : 存放图片的地方，可以在params.cfg 中进行修改
+  * ./images/每个 keyword 对应一个文件夹
+  * ./module : 搜索引擎模块
+  * ./tempolate : 网页模板
+  * ./keyword.txt : 搜索关键字
+  * ./params.cfg : 爬虫配置项
+  * ./url.db : SQlite3 数据库文件
