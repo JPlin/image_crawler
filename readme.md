@@ -26,13 +26,13 @@
   ```
   python Querykeywords.py params.cfg keyword.txt
   ```
-  开始爬取路径并下载图片
+  开始爬取路径并下载图片<br>
   4. 当前目录下 在 python环境的cmd输入
   ```
   python app.py
   ```
-  启动简易服务器
-  5. 根据提示打开网页(localhost:5000)进行图片下载数目查看
+  启动简易服务器<br>
+  5. 根据提示打开网页(localhost:5000)进行图片下载数目查看
 
 
 ## 目录结构
