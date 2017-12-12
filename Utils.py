@@ -52,7 +52,7 @@ class Utils(object):
     @staticmethod
     def parse_keywords(fn):
         keywords = []
-        fb = open(fn, 'r')
+        fb = open(fn, 'r' ,encoding='utf-8')
         for ln in fb:
             ln = Utils.parse_string(ln)
             if ln:

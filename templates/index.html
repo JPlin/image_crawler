@@ -3,8 +3,13 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>L T N S</title>
-
+<title>FBI</title>
+<style type="text/css">
+  html,body{margin:0;padding:0;}
+  .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+  .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+</style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?ak=d26L4vQQz0UThfbzLLco14aUc8oVyWBV&v=2.0&services=true"></script>
 <style>
 @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
 
@@ -13,118 +18,126 @@
   margin: 0;
 }
 
-.closed-signboard {
-  width: 400px;
-  height: 300px;
-  margin: 75px auto;
-  position: relative;
-  transform: scale(1) rotatez(7deg) translate(-17px, 1px);
-  animation: 1s init, 0.7s aa 1s, 3s ab 1.7s infinite;
-}
-
-@keyframes aa {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1) rotatez(7deg) translate(-17px, 1px);
-  }
-}
-
-@keyframes ab {
-  0% {
-    transform: rotatez(7deg) translate(-17px, 1px);
-  }
-  50% {
-    transform: rotatez(-7deg) translate(17px, 1px);
-  }
-  100% {
-    transform: rotatez(7deg) translate(-17px, 1px);
-  }
-}
-
-.sign {
-  color: white;
-  font-family: "Lato", sans-serif;
-  font-size: 80px;
-  font-weight: bold;
-  text-align: center;
-  background: #e00909;
+.main-box {
+  height: 95%;
   width: 100%;
-  height: 200px;
-  line-height: 200px;
-  position: absolute;
-  bottom: 0;
-  border-radius: 15px / 20px;
-  text-shadow: 0 2px #700a03;
+  top: 0%;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-end;
+
 }
 
-.strings {
-  width: 150px;
-  height: 150px;
-  border: solid 5px #ad5700;
-  border-bottom: none;
-  border-right: none;
-  position: absolute;
-  top: 38px;
-  left: 122px;
-  transform: rotatez(45deg);
+.sub-box{
+  width:30%;
+  height:40%;
+  margin:10px;
+  /* border:1px solid rgb(210, 225, 232); */
+  display:flex;
+  justify-content:space-between;
+  text-align:center;
+  overflow: hidden;
+}
+.box-left{
+  width:70%;
+  height:80%;
+  cursor: pointer;
+}
+.box-right{
+  width:30%;
+  height:80%;
+  cursor: pointer;
 }
 
-.pin {
-  width: 25px;
-  height: 25px;
-  position: absolute;
-  border-radius: 25px;
-}
-
-.pin.pin1 {
-  background: #9f9f9f;
-  top: 0;
-  left: 187px;
-}
-
-.pin.pin2, .pin.pin3 {
-  background: #9c0a00;
-}
-
-.pin.pin2 {
-  top: 110px;
-  left: 80px;
-}
-
-.pin.pin3 {
-  top: 110px;
-  right: 80px;
-}
-
-@keyframes init {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
+label{
+  font-family:sans-serif;
+  font-size: 20px;
+  font-weight:bold;
+  margin:10px;
+  color:darkslategray;
 }
 </style>
 
 </head>
-<body style="background:#9f9f9f url(https://images.unsplash.com/photo-1510279770292-4b34de9f5c23?auto=format&fit=crop&w=1350&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D) round 0 0 fixed">
+<body style="background:#46708862 url() round 0 0 fixed ; height:100% ; width:100%">
 
-	<div class="closed-signboard">
-		<div class="sign">{{count}}</div>
-		<div class="strings"></div>
-		<div class="pin pin1"></div>
-		<div class="pin pin2"></div>
-		<div class="pin pin3"></div>
-	</div>
+  <div style="margin:10px;text-align:center;font-size:larger;">城市公共安全</div>
+  <div style="width:600px;height:700px;margin:0 auto;z-index:10" id="allmap"></div>
 
+  <div class='main-box'>
+    <div class="sub-box">
+      <div class="box-left" onclick = "theLocation({{areas['car'][3]}}, {{areas['car'][2]}})">
+        <label>车辆[{{count['car']}}] · Loc[{{areas['car'][0]}},{{areas['car'][1]}}]</label>
+        <img src = {{urls['car']}} width="100%">
+      </div>
+      <div class="box-right">
+        <label></label>
+        <img src = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513096195835&di=fc7c1e3169288daff9a4caf27946a885&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F019211579511c80000018c1bfae88c.jpg" width="100%">
+      </div>
+    </div>
+    <div class="sub-box" style = 'border:0px;height:0px'>
+    </div>
+    <div class="sub-box">
+      <div class="box-right">
+        <label></label>
+        <img src = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513096195835&di=fc7c1e3169288daff9a4caf27946a885&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F019211579511c80000018c1bfae88c.jpg" width="100%">
+      </div>
+      <div class="box-left" onclick= "theLocation({{areas['pacer'][3]}} , {{areas['pacer'][2]}})">
+          <label>行人[{{count['pacer']}}] · Loc[{{areas['pacer'][0]}},{{areas['pacer'][1]}}]</label>
+        <img src = {{urls['pacer']}} width="100%">
+      </div>
+    </div>
+    <div class="sub-box">
+        <div class="box-left" onclick="theLocation({{areas['face'][3]}} , {{areas['face'][2]}})">
+          <label>人脸[{{count['face']}}] · Loc[{{areas['face'][0]}},{{areas['face'][1]}}]</label>
+          <img src = {{urls['face']}} width="100%">
+        </div>
+        <div class="box-right">
+          <label></label>
+          <img src = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513096195835&di=fc7c1e3169288daff9a4caf27946a885&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F019211579511c80000018c1bfae88c.jpg" width="100%">
+        </div>
+    </div>
+    <div class="sub-box" style = "height:10%">
+      <label>总图片[{{count['total']}}]</label>
+    </div>
+    <div class="sub-box">
+        <div class="box-right">
+          <label></label>
+          <img src = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1513096195835&di=fc7c1e3169288daff9a4caf27946a885&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F019211579511c80000018c1bfae88c.jpg" width="100%">
+        </div>
+        <div class="box-left" onclick = "theLocation({{areas['fire'][3]}} , {{areas['fire'][2]}})">
+          <label>火源[{{count['fire']}}] · Loc[{{areas['fire'][0]}},{{areas['fire'][1]}}]</label>
+          <img src = {{urls['fire']}} width="100%">
+        </div>
+    </div>
+  </div>
 </body>
 
-<script>
-function flush(){
-  location.reload()
-}
-window.setTimeout(flush , 5000)
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(116.331398,39.897445);
+    map.centerAndZoom(point,5);
+    map.enableScrollWheelZoom(true);
+
+	  // 用经纬度设置地图中心点
+	  function theLocation(longitude , latitude){
+      if(longitude != "" && latitude != ""){
+        map.clearOverlays(); 
+        var new_point = new BMap.Point(longitude,latitude);
+        var marker = new BMap.Marker(new_point);  // 创建标注
+        map.addOverlay(marker);              // 将标注添加到地图中
+        map.panTo(new_point);
+		  }
+	  }
+
+    function flush(){
+      window.location.reload();
+    }
+    location1 = [{{areas['car'][3]}} , {{areas['car'][2]}}];
+    theLocation(location1[0] , location1[1]);
+    window.setTimeout(flush , 30000);
 </script>
 </html>

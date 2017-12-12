@@ -24,6 +24,12 @@ class DB(object):
         values = self.cursor.fetchall()
         return values[0][0]
 
+    def query_last(self , name):
+        self.cursor.execute('select * from ' + name + ' order by id DESC limit 1')
+        value = self.cursor.fetchone()
+        print(value)
+        return value[3]
+
     def commit(self):
         self.cursor.close()
         self.conn.commit()
@@ -34,12 +40,30 @@ class DB(object):
     def __del__(self):
         self.conn.close()
         
-def test():
+def test(): # create the table which is going to be used
     db = DB()
     db.start()
-    db.create_db( 'url' ,'(id varchar(20) primary key , md5 varchar(32)  unique ,name varchar(50) , url varchar(500))') 
-    db.insert('url' , '(md5 ,name , url)' , '(\'8a0sdf8a0s\' , \' 1.jpg\' , \'http:baidu.com.jpg\')')
-    print(db.query_count('url'))
+    db.create_db( 'face' ,'(id varchar(20) primary key , md5 varchar(32)  unique ,name varchar(50) , url varchar(500))') 
+    db.insert('face' , '(md5 ,name , url)' , '(\'8a0sdf8a0s\' , \' 1.jpg\' , \'http://pic2.ooopic.com/11/98/31/31bOOOPIC12_1024.jpg\')')
+    print(db.query_count('face'))
+    db.commit()
+
+    db.start()
+    db.create_db( 'pacer' ,'(id varchar(20) primary key , md5 varchar(32)  unique ,name varchar(50) , url varchar(500))') 
+    db.insert('pacer' , '(md5 ,name , url)' , '(\'8a0sdf8a0s\' , \' 1.jpg\' , \'http://pic2.ooopic.com/11/98/31/31bOOOPIC12_1024.jpg\')')
+    print(db.query_count('pacer'))
+    db.commit()
+
+    db.start()
+    db.create_db( 'fire' ,'(id varchar(20) primary key , md5 varchar(32)  unique ,name varchar(50) , url varchar(500))') 
+    db.insert('fire' , '(md5 ,name , url)' , '(\'8a0sdf8a0s\' , \' 1.jpg\' , \'http://pic2.ooopic.com/11/98/31/31bOOOPIC12_1024.jpg\')')
+    print(db.query_count('fire'))
+    db.commit()
+
+    db.start()
+    db.create_db( 'car' ,'(id varchar(20) primary key , md5 varchar(32)  unique ,name varchar(50) , url varchar(500))') 
+    db.insert('car' , '(md5 ,name , url)' , '(\'8a0sdf8a0s\' , \' 1.jpg\' , \'http://pic2.ooopic.com/11/98/31/31bOOOPIC12_1024.jpg\')')
+    print(db.query_count('car'))
     db.commit()
     #db.start()
     #db.query('select * from url where name = \'1.jpg\'')

@@ -12,6 +12,7 @@ from Utils import Utils
 
 import random as rnd
 import os, codecs, sys
+from multiprocessing import Pool
 
 def queryk(engines, keyword, seeds):
 	for engine in engines:
@@ -34,6 +35,41 @@ def deduplicate(urls):
 				seeds.append((fn, url))
 
 	return seeds
+
+def run_proc(db_name , keyword , params , engines):
+	print('Child processs %s start.'%(db_name))
+
+	formats = list(set([x.strip().lower() for x in params['formats'].split(',')]))
+	min_image_size = int(params.get('min_image_size', 0))
+	max_image_size = int(params.get('max_image_size', 0))
+	
+	seeds = []
+	
+	if type(keyword) == list:
+		topic = keyword[0]
+		if	int(int(params.get('use_flickr', 0))) == 1 and int(params.get('flickr_query_tags_only', 0)) == 1: ## query tags only mode
+			print(":??s")
+			flickr = Flickr(params)
+			flickr.query_keyword(keyword[1:])
+		else:
+			for _keyword in keyword[1:]:
+				queryk(engines, _keyword, seeds)
+
+	elif type(keyword) == str:
+		topic = keyword
+		queryk(engines, keyword, seeds)
+	
+	seeds = deduplicate(seeds)
+	rnd.shuffle(seeds)
+	
+	crawler = Crawler(topic, params['database'], formats, 
+						min_image_size = min_image_size, 
+						max_image_size = max_image_size , db_name = db_name)
+
+	with codecs.open(os.path.join(params['database'], topic, 'urls.txt'), 'w', 'utf-8') as writer:
+		for fn_, url in seeds:
+			writer.write('%s,%s\n'%(fn_,url.replace('\n','')))
+	crawler.start(seeds)
 
 if __name__ == '__main__':
 	if len(sys.argv) == 3:
@@ -59,39 +95,22 @@ if __name__ == '__main__':
 		if int(params.get('use_getty_api', 0)) == 1:
 			engines.append(GettyApi(params))
 
-		formats = list(set([x.strip().lower() for x in params['formats'].split(',')]))
-		min_image_size = int(params.get('min_image_size', 0))
-		max_image_size = int(params.get('max_image_size', 0))
+		namedict = {u'人脸':'face' , 
+					u'行人':'pacer',
+					u'火源':'fire',
+					u'车辆':'car'}
 
+		p = Pool(4)
 		for keyword in keywords:
-			seeds = []
-			
-			if type(keyword) == list:
-				topic = keyword[0]
-				if	int(int(params.get('use_flickr', 0))) == 1 and int(params.get('flickr_query_tags_only', 0)) == 1: ## query tags only mode
-					print(":??s")
-					flickr = Flickr(params)
-					flickr.query_keyword(keyword[1:])
-				else:
-					for _keyword in keyword[1:]:
-						queryk(engines, _keyword, seeds)
+			if keyword in namedict.keys():
+				name = namedict[keyword]
+			else:
+				name = 'url' # default put url in table 'url'
+			p.apply_async(run_proc , args = (name , keyword , params , engines ,))
+		p.close()
+		p.join()
+		print('All subprocess done.')
 
-			elif type(keyword) == str:
-				topic = keyword
-				queryk(engines, keyword, seeds)
-			
-			seeds = deduplicate(seeds)
-			rnd.shuffle(seeds)
-			
-			crawler = Crawler(topic, params['database'], formats, 
-							  min_image_size = min_image_size, 
-							  max_image_size = max_image_size)
-
-			with codecs.open(os.path.join(params['database'], topic, 'urls.txt'), 'w', 'utf-8') as writer:
-				for fn_, url in seeds:
-					writer.write('%s,%s\n'%(fn_,url.replace('\n','')))
-
-			crawler.start(seeds)
 	else:
 		print('Usage : python QueryKeywords.py PARAMS_CFG KEY_WORDS_LIST')
 		# PARAMS_CFG params' file name

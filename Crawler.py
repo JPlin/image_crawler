@@ -24,8 +24,10 @@ class Crawler(object):
     High Speed Image Crawler
     """
 
-    def __init__(self, name, home, formats, min_image_size=0, max_image_size=0):
+    def __init__(self, name, home, formats, min_image_size=0, max_image_size=0 , db_name = 'url'):
+        
         self.name = name
+        self.db_name = db_name
         self.home = '%s\\%s' % (home, name)
 
         self.formats = formats[:]
@@ -130,7 +132,7 @@ class Crawler(object):
             while True:
                 name , value = dic.popitem()
                 key = hashlib.md5(value.encode('utf-8')).hexdigest()[8:-8]
-                self.db.insert('url','(md5 , name , url)','(\''+ key +'\' , \'' + name +'\' , \''+ value +'\')')
+                self.db.insert(self.db_name ,'(md5 , name , url)','(\''+ key +'\' , \'' + name +'\' , \''+ value +'\')')
         except:
             return
         finally:

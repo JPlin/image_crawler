@@ -1,7 +1,10 @@
 ## Topic Format 	: [topic]:[keyword1],[keyword1],...
 ## Keyword Format 	: keyword
 
-ID picture
+人脸
+行人
+火源
+车辆
 # ID photo
 # selfie
 # figure

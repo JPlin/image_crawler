@@ -10,6 +10,7 @@
     * PIL
     * flask
     * lxml
+    * maxminddb-geolite2
     * 根据错误提示安装相应的packdage
 
 ## 使用方式
