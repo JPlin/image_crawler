@@ -1,11 +1,11 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template , jsonify
 from geolite2 import geolite2
 import urllib3.util.url as U_R_L
 import socket
 import re
 import DB
 
-app = Flask(__name__)
+app = Flask(__name__ )
 table_dict = {
     'car' : u'车辆',
     'face' : u'人脸',
@@ -44,8 +44,10 @@ def home():
         if loc is not None:
             area[key] = loc
             last_area[key] = area[key]
+
     db.commit()
     return render_template('index.html' , count = last_count , urls = last_urls , areas = last_area)
+
 
 # turn the ip into relevant address
 def turn_ip_address(ip = None):
@@ -73,6 +75,34 @@ def turn_url_ip(url = None):
         return ip
     except:
         print("url: %s is wrong!"%(url))
+
+@app.route('/data')
+def dataFromAjax():
+    urls.clear()
+    count.clear()
+    db = DB.DB()
+    db.start()
+    
+    sum = 0
+    for key in table_dict:
+        count[key] = db.query_count(key)
+        if int(count[key]) > 0:
+            last_count[key] = count[key]
+        sum += last_count[key]
+    last_count['total'] = sum
+
+    for key in table_dict:
+        urls[key] = db.query_last(key)
+        if len(urls[key]) > 0:
+            last_urls[key] = urls[key]
+        loc = turn_ip_address(turn_url_ip(urls[key]))
+        if loc is not None:
+            area[key] = loc
+            last_area[key] = area[key]
+
+    db.commit()
+    data = {'count': last_count , 'url': last_urls , 'area':last_area}
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run()

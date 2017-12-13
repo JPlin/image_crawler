@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import numpy as np
 
 class DB(object):
     DB_FILE_NAME = 'url.db'
@@ -25,9 +26,9 @@ class DB(object):
         return values[0][0]
 
     def query_last(self , name):
-        self.cursor.execute('select * from ' + name + ' order by id DESC limit 1')
+        self.cursor.execute('select * from ' + name + ' order by id DESC limit 10')
         value = self.cursor.fetchone()
-        print(value)
+        #value = self.cursor.fetchall()
         return value[3]
 
     def commit(self):

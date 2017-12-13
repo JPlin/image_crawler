@@ -44,4 +44,8 @@
   * ./tempolate : 网页模板
   * ./keyword.txt : 搜索关键字
   * ./params.cfg : 爬虫配置项
-  * ./url.db : SQlite3 数据库文件
+  * ./url.db : SQlite3 数据库文件(已经新建了四个表)
+
+## 运行网页截图
+
+  ![](static/Capture.PNG)
