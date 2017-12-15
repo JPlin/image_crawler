@@ -29,6 +29,8 @@ class DB(object):
         self.cursor.execute('select * from ' + name + ' order by id DESC limit 10')
         value = self.cursor.fetchone()
         #value = self.cursor.fetchall()
+        if value is None:
+            return None
         return value[3]
 
     def commit(self):

@@ -38,7 +38,7 @@ def home():
 
     for key in table_dict:
         urls[key] = db.query_last(key)
-        if len(urls[key]) > 0:
+        if urls[key] is not None:
             last_urls[key] = urls[key]
         loc = turn_ip_address(turn_url_ip(urls[key]))
         if loc is not None:
@@ -93,7 +93,7 @@ def dataFromAjax():
 
     for key in table_dict:
         urls[key] = db.query_last(key)
-        if len(urls[key]) > 0:
+        if urls[key] is not None:
             last_urls[key] = urls[key]
         loc = turn_ip_address(turn_url_ip(urls[key]))
         if loc is not None:

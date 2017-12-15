@@ -1,147 +1,115 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>FBI</title>
-<style type="text/css">
-  html,body{margin:0;padding:0;}
-  .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
-  .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
-</style>
-<!-- d26L4vQQz0UThfbzLLco14aUc8oVyWBV -->
-<script type="text/javascript" src="http://api.map.baidu.com/api?ak=1XjLLEhZhQNUzd93EjU5nOGQ&v=2.0&services=true"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
-<script type="text/javascript" src="/static/jquery.min.js"></script>
+   <title>城市公共安全数据</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+   <script src="/static/js/jquery.min.js"></script>
+   <script src="/static/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="http://api.map.baidu.com/api?ak=1XjLLEhZhQNUzd93EjU5nOGQ&v=2.0&services=true"></script>
+   <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+   <script src="http://mapv.baidu.com/build/mapv.min.js"></script>
+   <link href = "/static/css/index.css" rel = "stylesheet" media="screen">
 <style>
-@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
-
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+.topBar{
+    width: 100%; 
+    height: 64px;
+    background-image: url(/static/img/topbar.png);
+    background-size:100%;
+    /* //background: rgb(36,37,42	); */
+    box-shadow: 6px 6px 28px rgb(6,6,6);
+    margin-bottom: 24px;
+    text-align: center;
 }
-*{
-  padding:0;
-  margin:0;
+.bottomBar{
+    width: 100%; 
+    height: 40px;
+    background-image: url(/static/img/topbar.png);
+    background-size:100%;
+    color:rgb(239, 239, 239);
+    box-shadow: 6px 6px 28px rgb(6,6,6);
+	margin-top: 24px;
+	padding-top: 8px;
+	font-size:18px;
+	text-align: center;
+	position: fixed;
+	bottom: 0px;
 }
-.main-box {
-  height: 95%;
-  width: 100%;
-  top: 0%;
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: flex-end;
-
+label {
+	max-width: None;
+	color:rgb(92, 53, 53);
 }
-
-.sub-box{
-  width:30%;
-  height:40%;
-  margin:10px;
-  /* border:1px solid rgb(210, 225, 232); */
-  display:flex;
-  justify-content:space-between;
-  text-align:center;
-  overflow: hidden;
-  
+.label{
+	color:rgb(230,230,230);
+    font-size: 18px;
+    margin: 4px;
+	font-weight: 200;
 }
-.box-left{
-  width:70%;
-  height:80%;
-  cursor: pointer;
-}
-.box-right{
-  width:30%;
-  height:80%;
-  cursor: pointer;
-}
-
-label{
-  font-family:sans-serif;
-  font-size: 20px;
-  font-weight:bold;
-  margin:10px;
-}
+.anchorBL{display:none;}
 </style>
-
 </head>
-<body style="height:100% ; width:100%">
-  <div style="width:100% ; height:100% ; background-color:#fff ; position:fixed;z-index : -10">
-    <div style="width:100%;height:48%">
-    <div style="float:left;background-color:#f8682c ; width:50% ;height:100% ;"></div>
-    <div style="float:right;background-color:#91c300 ; width:50% ;height:100% ;"></div>
-    </div>
-    <div style="width:100%;height:52%">
-    <div style="float:left;background-color:#00b4f1 ; width:50% ;height:100%;"></div>
-    <div style="float:right;background-color:#ffc300 ; width:50% ;height:100%"></div>
-    </div>
-  </div>
-  <div style="margin:10px;text-align:center;font-size:larger;">城市公共安全</div>
-  <div style="width:600px;height:700px;margin:0 auto;z-index:10" id="allmap"></div>
+<body style="/*background-image: url(/static/img/bg2.jpg);*/background-size:100% ; background-color:rgb(4, 64, 97)">
+	<div class="topBar" >
+		<h1> -● 城 市 公 共 安 全 数 据 ●-</h1>
+	</div>	
+	<!-- <div class="col-md-1"></div> -->
+	<div class="col-md-2">
+		<div class="box" style="background-color:#f8682c;">
+			<div class="title" style="justify-content: flex-end;">
+				<label class="label">车辆</label>
+				<label><img class="icon" src="/static/img/car.png"/></label>		
+			</div>
+			<div style="position:relative"><div class="info-left" id="label_car">Num [419]<br/>Loc [China,Asia]</div><img class="photo" id="image_car" src="/static/img/0.jpg"/></div>
+		</div>	
+		<div class="box" style="background-color:#00b4f1;">
+			<div class="title" style="justify-content: flex-end;">
+				<label class="label">行人</label>
+				<label><img class="icon" src="/static/img/man.png"/></label>
+			</div>
+			<div style="position:relative"><div class="info-left" id="label_pacer">Num [599]<br/>Loc [United States,North America]</div><img class="photo" id="image_pacer" src="/static/img/1.jpg"/></div>
+		</div>	
 
-  <div class='main-box'>
-    <div class="sub-box">
-      <div class="box-left" onclick = "theLocation({{areas['car'][3]}}, {{areas['car'][2]}})">
-        <label id = "label_car" style="color:white;">车辆[{{count['car']}}] · Loc[{{areas['car'][0]}},{{areas['car'][1]}}]</label>
-        <img id="image_car" src = {{urls['car']}} width="100%">
-      </div>
-      <div class="box-right">
-        <label></label>
-        <img src = "https://stickershop.line-scdn.net/stickershop/v1/product/2242/LINEStorePC/main@2x.png;compress=true?__=20161019" width="100%">
-      </div>
-    </div>
-    <div class="sub-box" style = 'border:0px;height:0px'>
-    </div>
-    <div class="sub-box">
-      <div class="box-right">
-        <label></label>
-        <img src = "https://stickershop.line-scdn.net/stickershop/v1/product/2242/LINEStorePC/main@2x.png;compress=true?__=20161019" width="100%">
-      </div>
-      <div class="box-left" onclick= "theLocation({{areas['pacer'][3]}} , {{areas['pacer'][2]}})">
-          <label id = "label_pacer" style="color:white;">行人[{{count['pacer']}}] · Loc[{{areas['pacer'][0]}},{{areas['pacer'][1]}}]</label>
-        <img id="image_pacer" src = {{urls['pacer']}} width="100%">
-      </div>
-    </div>
-    <div class="sub-box">
-        <div class="box-left" onclick="theLocation({{areas['face'][3]}} , {{areas['face'][2]}})">
-          <label id = "label_face" style="color:white;">人脸[{{count['face']}}] · Loc[{{areas['face'][0]}},{{areas['face'][1]}}]</label>
-          <img id="image_face" src = {{urls['face']}} width="100%">
-        </div>
-        <div class="box-right">
-          <label></label>
-          <img src = "https://stickershop.line-scdn.net/stickershop/v1/product/2242/LINEStorePC/main@2x.png;compress=true?__=20161019" width="100%">
-        </div>
-    </div>
-    <div class="sub-box" style = "height:10%">
-      <label id = "total">总图片[{{count['total']}}]</label>
-    </div>
-    <div class="sub-box">
-        <div class="box-right">
-          <label></label>
-          <img src = "https://stickershop.line-scdn.net/stickershop/v1/product/2242/LINEStorePC/main@2x.png;compress=true?__=20161019" width="100%">
-        </div>
-        <div class="box-left" onclick = "theLocation({{areas['fire'][3]}} , {{areas['fire'][2]}})">
-          <label id = "label_fire" style="color:white;">火源[{{count['fire']}}] · Loc[{{areas['fire'][0]}},{{areas['fire'][1]}}]</label>
-          <img id="image_fire" src = {{urls['fire']}} width="100%">
-        </div>
-    </div>
-  </div>
+	</div>
+
+	<div class="col-md-8 main">
+		<!-- <div><img class="map" src="/static/img/map.png"/></div> -->
+		<div style="width:100%;height:800px;margin:0 auto;z-index:10" id="allmap"></div>
+		<canvas id="canvas"></canvas>
+	</div>
+	<div class="col-md-2">
+		<div class="box" style="background-color:#91c300;">
+			<div class="title" style="justify-content: flex-start;">			
+				<label><img class="icon" src="/static/img/face.png"/></label>	
+				<label class = "label">人脸</label>			
+			</div>
+			<div style="position:relative"><div class="info-right" id="label_face">Num [659]<br/>Loc [China,Asia]</div><img class="photo" id="image_face" src="/static/img/2.jpg"/></div>
+		</div>	
+		<div class="box" style="background-color:#ffc300;">
+			<div class="title" style="justify-content: flex-start;">
+				<label><img class="icon" src="/static/img/fire.png"/></label>
+				<label class = "label">火源</label>							
+			</div>
+			<div style="position:relative"><div class="info-right" id="label_fire">Num [1059]<br/>Loc [China,Asia]</div><img class="photo" id="image_fire" src="/static/img/3.jpg"/></div>
+		</div>	
+	</div>
+	<!-- <div class="col-md-1"></div> -->
+	<div align="center">
+		<div class="bottomBar" id="total">
+			总数:0<br/>
+		</div>
+	</div>
 </body>
-
 <script type="text/javascript">
     // 百度地图API功能
-    var map = new BMap.Map("allmap");
+    var map = new BMap.Map("allmap" , {enableMapClick: false});
     var xiamen = new BMap.Point(118.13993,24.439356);
     var marker = new BMap.Marker(xiamen);
     var exists_points = [];
     var geoc = new BMap.Geocoder();
 
-    map.centerAndZoom(xiamen,4);
+	map.enableScrollWheelZoom();
+	map.setMapStyle({style:"midnight"})
+    map.centerAndZoom(xiamen,1);
     map.addOverlay(marker);
     marker.setAnimation(BMAP_ANIMATION_BOUNCE);
     marker.disableMassClear();
@@ -151,101 +119,351 @@ label{
             shape: BMAP_POINT_SHAPE_STAR,
             color: '#24936E'
         }
-    
-    var color_car = "#8E354A"
-    var color_pacer = "#5DAC81"
-    var color_face = "#8F77B5"
-    var color_fire = "#FAD689"
-    
-	  // 用经纬度设置地图中心点
-	  function theLocation(longitude , latitude){
-      if(longitude != "" && latitude != ""){
+	// 地图自定义样式
+	map.setMapStyle({
+		styleJson: [{
+			"featureType": "water",
+			"elementType": "all",
+			"stylers": {
+				"color": "#044161"
+			}
+		}, {
+			"featureType": "land",
+			"elementType": "all",
+			"stylers": {
+				"color": "#091934"
+			}
+		}, {
+			"featureType": "boundary",
+			"elementType": "geometry",
+			"stylers": {
+				"color": "#064f85"
+			}
+		}, {
+			"featureType": "railway",
+			"elementType": "all",
+			"stylers": {
+				"visibility": "off"
+			}
+		}, {
+			"featureType": "highway",
+			"elementType": "geometry",
+			"stylers": {
+				"color": "#004981"
+			}
+		}, {
+			"featureType": "highway",
+			"elementType": "geometry.fill",
+			"stylers": {
+				"color": "#005b96",
+				"lightness": 1
+			}
+		}, {
+			"featureType": "highway",
+			"elementType": "labels",
+			"stylers": {
+				"visibility": "on"
+			}
+		}, {
+			"featureType": "arterial",
+			"elementType": "geometry",
+			"stylers": {
+				"color": "#004981",
+				"lightness": -39
+			}
+		}, {
+			"featureType": "arterial",
+			"elementType": "geometry.fill",
+			"stylers": {
+				"color": "#00508b"
+			}
+		}, {
+			"featureType": "poi",
+			"elementType": "all",
+			"stylers": {
+				"visibility": "off"
+			}
+		}, {
+			"featureType": "green",
+			"elementType": "all",
+			"stylers": {
+				"color": "#056197",
+				"visibility": "off"
+			}
+		}, {
+			"featureType": "subway",
+			"elementType": "all",
+			"stylers": {
+				"visibility": "off"
+			}
+		}, {
+			"featureType": "manmade",
+			"elementType": "all",
+			"stylers": {
+				"visibility": "off"
+			}
+		}, {
+			"featureType": "local",
+			"elementType": "all",
+			"stylers": {
+				"visibility": "off"
+			}
+		}, {
+			"featureType": "arterial",
+			"elementType": "labels",
+			"stylers": {
+				"visibility": "off"
+			}
+		}, {
+			"featureType": "boundary",
+			"elementType": "geometry.fill",
+			"stylers": {
+				"color": "#029fd4"
+			}
+		}, {
+			"featureType": "building",
+			"elementType": "all",
+			"stylers": {
+				"color": "#1a5787"
+			}
+		}, {
+			"featureType": "label",
+			"elementType": "all",
+			"stylers": {
+				"visibility": "off"
+			}
+		}, {
+			"featureType": "poi",
+			"elementType": "labels.text.fill",
+			"stylers": {
+				"color": "#ffffff"
+			}
+		}, {
+			"featureType": "poi",
+			"elementType": "labels.text.stroke",
+			"stylers": {
+				"color": "#1e1c1c"
+			}
+		}, {
+			"featureType": "administrative",
+			"elementType": "labels",
+			"stylers": {
+				"visibility": "off"
+			}
+		},{
+			"featureType": "road",
+			"elementType": "labels",
+			"stylers": {
+				"visibility": "off"
+			}
+		}]
+	});
+
+    // 用经纬度设置地图中心点
+    function theLocation(longitude , latitude){
+    if(longitude != "" && latitude != ""){
         map.clearOverlays(); 
         var new_point = new BMap.Point(longitude,latitude);
         var marker = new BMap.Marker(new_point);  // 创建标注
         map.addOverlay(marker);              // 将标注添加到地图中
         map.panTo(new_point);
-		  }
-	  }
+        }
+    }
+	// var lineOptions = {
+    //             strokeStyle: 'rgba(255, 250, 50, 0.8)',
+    //             shadowColor: 'rgba(255, 250, 50, 1)',
+    //             shadowBlur: 20,
+    //             lineWidth: 2,
+    //             zIndex: 100,
+    //             draw: 'simple'
+	// 		}
+			
+	// var pointOptions = {
+	// 	fillStyle: 'rgba(254,175,3,0.7)',
+	// 	shadowColor: 'rgba(55, 50, 250, 0.5)',
+	// 	shadowBlur: 10,
+	// 	size: 5,
+	// 	zIndex: 10,
+	// 	draw: 'simple'
+	// }
 
-    function drawMap(){
-      $.ajax({url:"/data" , success:function(data){
-        
-        $("#label_car").text("车辆[" + data.count.car +"] · Loc[" + data.area.car[0] + ","+ data.area.car[1]+"]");
-        $("#label_pacer").text("行人[" + data.count.pacer +"] · Loc[" + data.area.pacer[0] + ","+ data.area.pacer[1]+"]");
-        $("#label_fire").text("火源[" + data.count.fire +"] · Loc[" + data.area.fire[0] + ","+ data.area.fire[1]+"]");
-        $("#label_face").text("人脸[" + data.count.face +"] · Loc[" + data.area.face[0] + ","+ data.area.face[1]+"]");
+	// var timeOptions = {
+	// 	fillStyle: 'rgba(255, 250, 250, 0.5)',
+	// 	zIndex: 200,
+	// 	size: 2.5,
+	// 	animation: {
+	// 		type: 'time',
+	// 		stepsRange: {
+	// 			start: 0,
+	// 			end: 50
+	// 		},
+	// 		trails: 10,
+	// 		duration: 2,
+	// 	},
+	// 	draw: 'simple'
+	// }
+	
+	// var timeDataSet = null;
+	// var lineDataSet = null;
+	// var pointDataSet = null;
 
-        $('#image_car').attr("src" , data.url.car);
-        $('#image_pacer').attr("src" , data.url.pacer);
-        $('#image_fire').attr("src" , data.url.fire);
-        $('#image_face').attr("src" , data.url.face);
+	$.ajax({url:"/data" , success:function(data){
+          
+          $("#label_car").text("Num[" + data.count.car +"] \r\n Loc[" + data.area.car[0] + ","+ data.area.car[1]+"]");
+          $("#label_pacer").text("Num[" + data.count.pacer +"] \r\n Loc[" + data.area.pacer[0] + ","+ data.area.pacer[1]+"]");
+          $("#label_fire").text("Num[" + data.count.fire +"] \r\n Loc[" + data.area.fire[0] + ","+ data.area.fire[1]+"]");
+          $("#label_face").text("Num[" + data.count.face +"] \r\n Loc[" + data.area.face[0] + ","+ data.area.face[1]+"]");
+		  $("#total").text("总数:" + (data.count.car + data.count.pacer + data.count.fire + data.count.face));
 
-        map.clearOverlays();
+          $('#image_car').attr("src" , data.url.car);
+          $('#image_pacer').attr("src" , data.url.pacer);
+          $('#image_fire').attr("src" , data.url.fire);
+          $('#image_face').attr("src" , data.url.face);
+  
+          map.clearOverlays();
+  
+          var carPosition = new BMap.Point(data.area.car[3] , data.area.car[2]);
+          var pacerPosition = new BMap.Point(data.area.pacer[3] , data.area.pacer[2]);
+          var firePosition = new BMap.Point(data.area.fire[3] , data.area.fire[2]);
+          var facePosition = new BMap.Point(data.area.face[3] , data.area.face[2]);
+  
+          // save history points
+          exists_points.push(carPosition);
+          exists_points.push(pacerPosition);
+          exists_points.push(firePosition);
+          exists_points.push(facePosition);
+  
+          // draw the markers
+          var marker1 = new BMap.Marker(carPosition);
+          var marker2 = new BMap.Marker(pacerPosition);
+          var marker3 = new BMap.Marker(firePosition);
+          var marker4 = new BMap.Marker(facePosition);
+		  
+		  map.addOverlay(marker1); 
+          map.addOverlay(marker2); 
+          map.addOverlay(marker3); 
+          map.addOverlay(marker4);
+  
+          // draw location label
+          geoc.getLocation(carPosition , function(rs){
+            var addComp = rs.addressComponents;
+            var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+            marker1.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
+          });
+          geoc.getLocation(pacerPosition , function(rs){
+            var addComp = rs.addressComponents;
+            var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+            marker2.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
+          });
+          geoc.getLocation(firePosition , function(rs){
+            var addComp = rs.addressComponents;
+            var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+            marker3.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
+          });
+          geoc.getLocation(facePosition , function(rs){
+            var addComp = rs.addressComponents;
+            var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+            marker4.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
+          });
+  
+          // draw the curve 
+          var curve1 = new BMapLib.CurveLine( [xiamen , carPosition] , {strokeColor : "#f8682c" , strokeWeight : 2 , strokeOpacity : 1});
+          var curve2 = new BMapLib.CurveLine( [xiamen , firePosition] , {strokeColor : "#ffc300" , strokeWeight : 2 , strokeOpacity : 1});
+          var curve3 = new BMapLib.CurveLine( [xiamen , pacerPosition] , {strokeColor : "#00b4f1" , strokeWeight : 2 , strokeOpacity : 1});
+          var curve4 = new BMapLib.CurveLine( [xiamen , facePosition] , {strokeColor : "#91c300" , strokeWeight : 2 , strokeOpacity : 1});
+  
+          map.addOverlay(curve1);
+          map.addOverlay(curve2);
+          map.addOverlay(curve3);
+          map.addOverlay(curve4);
+  
+          // draw history points
+          var pointCollection = new BMap.PointCollection(exists_points, options); 
+          map.addOverlay(pointCollection);
+  
+        //   var qianxi = new mapv.DataSet([
+        //         {
+        //           lng: data.area.car[3],
+        //           lat: data.area.car[2],
+        //         },
+        //         {
+        //           lng: data.area.pacer[3],
+        //           lat: data.area.pacer[2],
+        //         },
+        //         {
+        //           lng: data.area.fire[3],
+        //           lat: data.area.fire[2],
+        //         },
+        //         {
+        //           lng: data.area.face[3],
+        //           lat: data.area.face[2],
+        //         }
+        //     ]);
 
-        var carPosition = new BMap.Point(data.area.car[3] , data.area.car[2]);
-        var pacerPosition = new BMap.Point(data.area.pacer[3] , data.area.pacer[2]);
-        var firePosition = new BMap.Point(data.area.fire[3] , data.area.fire[2]);
-        var facePosition = new BMap.Point(data.area.face[3] , data.area.face[2]);
+        //     var qianxiData = qianxi.get();
 
-        // save history points
-        exists_points.push(carPosition);
-        exists_points.push(pacerPosition);
-        exists_points.push(firePosition);
-        exists_points.push(facePosition);
+        //     var lineData = [];
+        //     var pointData = [];
+        //     var timeData = [];
 
-        // draw the markers
-        var marker1 = new BMap.Marker(carPosition);
-        var marker2 = new BMap.Marker(pacerPosition);
-        var marker3 = new BMap.Marker(firePosition);
-        var marker4 = new BMap.Marker(facePosition);
-        map.addOverlay(marker1); 
-        map.addOverlay(marker2); 
-        map.addOverlay(marker3); 
-        map.addOverlay(marker4);
+        //     for (var i = 0; i < 4; i++) {
+        //         var fromCenter = mapv.utilCityCenter.getCenterByCityName('厦门');
+        //         var toCenter = mapv.utilCityCenter.getCenterByCityName('厦门');
+		// 		// var fromCenter = {lng:124,lat:20};
+		// 		// var toCenter = {lng:128,lat:20};
+		// 		fromCenter.lng = qianxiData[i].lng;
+        //         fromCenter.lat = qianxiData[i].lat;
+        //         if (!fromCenter || !toCenter) {
+        //             continue;
+        //         }
+        //         pointData.push(
+        //         {
+        //             geometry: {
+        //                 type: 'Point',
+        //                 coordinates: [fromCenter.lng, fromCenter.lat]
+        //             }
+        //         }
+        //         );
+        //         pointData.push(
+        //         {
+        //             geometry: {
+        //                 type: 'Point',
+        //                 coordinates: [toCenter.lng, toCenter.lat]
+        //             }
+        //         }
+        //         );
 
-        // draw location label
-        geoc.getLocation(carPosition , function(rs){
-          var addComp = rs.addressComponents;
-          console.log(addComp);
-          var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
-          marker1.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
-        });
-        geoc.getLocation(pacerPosition , function(rs){
-          var addComp = rs.addressComponents;
-          var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
-          marker2.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
-        });
-        geoc.getLocation(firePosition , function(rs){
-          var addComp = rs.addressComponents;
-          var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
-          marker3.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
-        });
-        geoc.getLocation(facePosition , function(rs){
-          var addComp = rs.addressComponents;
-          var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
-          marker4.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
-        });
+        //         var curve = mapv.utilCurve.getPoints([fromCenter, toCenter]);
 
-        // draw the curve 
-        var curve1 = new BMapLib.CurveLine( [carPosition , xiamen] , {strokeColor : "#f8682c" , strokeWeight : 2 , strokeOpacity : 1});
-        var curve2 = new BMapLib.CurveLine( [firePosition , xiamen] , {strokeColor : "#ffc300" , strokeWeight : 2 , strokeOpacity : 1});
-        var curve3 = new BMapLib.CurveLine( [pacerPosition , xiamen] , {strokeColor : "#91c300" , strokeWeight : 2 , strokeOpacity : 1});
-        var curve4 = new BMapLib.CurveLine( [facePosition ,xiamen] , {strokeColor : "#00b4f1" , strokeWeight : 2 , strokeOpacity : 1});
+        //         for (j = 0; j < curve.length; j++) {
+        //             timeData.push({
+        //                 geometry: {
+        //                     type: 'Point',
+        //                     coordinates: curve[j]
+        //                 },
+        //                 count: 1,
+        //                 time: j
+        //             });
+        //         }
 
-        map.addOverlay(curve1);
-        map.addOverlay(curve2);
-        map.addOverlay(curve3);
-        map.addOverlay(curve4);
+        //         lineData.push({
+        //             geometry: {
+        //                 type: 'LineString',
+        //                 coordinates: curve
+        //                 //coordinates: [[fromCenter.lng, fromCenter.lat], [toCenter.lng, toCenter.lat]]
+        //             },
+        //             count: 30 * Math.random()
+        //         });
 
-        // draw history points
-        var pointCollection = new BMap.PointCollection(exists_points, options); 
-        map.addOverlay(pointCollection)
-
-        setTimeout(window.drawMap , 2000);
-      }});
-    };
-
-    drawMap()
+		// 	}
+		// 	lineDataSet = new mapv.DataSet(lineDataSet);
+		// 	pointDataSet = new mapv.DataSet(pointDataSet);
+		// 	timeDataSet = new mapv.DataSet(timeDataSet);
+		}});
+	
+	//   var timeLayer = new mapv.baiduMapLayer(map, timeDataSet, timeOptions);
+	//   var pointLayer = new mapv.baiduMapLayer(map, pointDataSet, pointOptions);
+	//   var lineLayer = new mapv.baiduMapLayer(map, lineDataSet, lineOptions);
+      window.setInterval(drawMap, 2000);
 </script>
 </html>

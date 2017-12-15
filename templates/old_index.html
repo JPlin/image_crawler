@@ -1,0 +1,251 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>FBI</title>
+<style type="text/css">
+  html,body{margin:0;padding:0;}
+  .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+  .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+</style>
+<!-- d26L4vQQz0UThfbzLLco14aUc8oVyWBV -->
+<script type="text/javascript" src="http://api.map.baidu.com/api?ak=1XjLLEhZhQNUzd93EjU5nOGQ&v=2.0&services=true"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<style>
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+*{
+  padding:0;
+  margin:0;
+}
+.main-box {
+  height: 95%;
+  width: 100%;
+  top: 0%;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-end;
+
+}
+
+.sub-box{
+  width:30%;
+  height:40%;
+  margin:10px;
+  /* border:1px solid rgb(210, 225, 232); */
+  display:flex;
+  justify-content:space-between;
+  text-align:center;
+  overflow: hidden;
+  
+}
+.box-left{
+  width:70%;
+  height:80%;
+  cursor: pointer;
+}
+.box-right{
+  width:30%;
+  height:80%;
+  cursor: pointer;
+}
+
+label{
+  font-family:sans-serif;
+  font-size: 20px;
+  font-weight:bold;
+  margin:10px;
+}
+</style>
+
+</head>
+<body style="height:100% ; width:100%">
+  <div style="width:100% ; height:100% ; background-color:#fff ; position:fixed;z-index : -10">
+    <div style="width:100%;height:48%">
+    <div style="float:left;background-color:#f8682c ; width:50% ;height:100% ;"></div>
+    <div style="float:right;background-color:#91c300 ; width:50% ;height:100% ;"></div>
+    </div>
+    <div style="width:100%;height:52%">
+    <div style="float:left;background-color:#00b4f1 ; width:50% ;height:100%;"></div>
+    <div style="float:right;background-color:#ffc300 ; width:50% ;height:100%"></div>
+    </div>
+  </div>
+  <div style="margin:10px;text-align:center;font-size:larger;">城市公共安全</div>
+  <div style="width:600px;height:700px;margin:0 auto;z-index:10" id="allmap"></div>
+
+  <div class='main-box'>
+    <div class="sub-box">
+      <div class="box-left" onclick = "theLocation({{areas['car'][3]}}, {{areas['car'][2]}})">
+        <label id = "label_car" style="color:white;">车辆[{{count['car']}}] · Loc[{{areas['car'][0]}},{{areas['car'][1]}}]</label>
+        <img id="image_car" src = {{urls['car']}} width="100%">
+      </div>
+      <div class="box-right">
+        <label></label>
+        <img src = "https://stickershop.line-scdn.net/stickershop/v1/product/2242/LINEStorePC/main@2x.png;compress=true?__=20161019" width="100%">
+      </div>
+    </div>
+    <div class="sub-box" style = 'border:0px;height:0px'>
+    </div>
+    <div class="sub-box">
+      <div class="box-right">
+        <label></label>
+        <img src = "https://stickershop.line-scdn.net/stickershop/v1/product/2242/LINEStorePC/main@2x.png;compress=true?__=20161019" width="100%">
+      </div>
+      <div class="box-left" onclick= "theLocation({{areas['pacer'][3]}} , {{areas['pacer'][2]}})">
+          <label id = "label_pacer" style="color:white;">行人[{{count['pacer']}}] · Loc[{{areas['pacer'][0]}},{{areas['pacer'][1]}}]</label>
+        <img id="image_pacer" src = {{urls['pacer']}} width="100%">
+      </div>
+    </div>
+    <div class="sub-box">
+        <div class="box-left" onclick="theLocation({{areas['face'][3]}} , {{areas['face'][2]}})">
+          <label id = "label_face" style="color:white;">人脸[{{count['face']}}] · Loc[{{areas['face'][0]}},{{areas['face'][1]}}]</label>
+          <img id="image_face" src = {{urls['face']}} width="100%">
+        </div>
+        <div class="box-right">
+          <label></label>
+          <img src = "https://stickershop.line-scdn.net/stickershop/v1/product/2242/LINEStorePC/main@2x.png;compress=true?__=20161019" width="100%">
+        </div>
+    </div>
+    <div class="sub-box" style = "height:10%">
+      <label id = "total">总图片[{{count['total']}}]</label>
+    </div>
+    <div class="sub-box">
+        <div class="box-right">
+          <label></label>
+          <img src = "https://stickershop.line-scdn.net/stickershop/v1/product/2242/LINEStorePC/main@2x.png;compress=true?__=20161019" width="100%">
+        </div>
+        <div class="box-left" onclick = "theLocation({{areas['fire'][3]}} , {{areas['fire'][2]}})">
+          <label id = "label_fire" style="color:white;">火源[{{count['fire']}}] · Loc[{{areas['fire'][0]}},{{areas['fire'][1]}}]</label>
+          <img id="image_fire" src = {{urls['fire']}} width="100%">
+        </div>
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var xiamen = new BMap.Point(118.13993,24.439356);
+    var marker = new BMap.Marker(xiamen);
+    var exists_points = [];
+    var geoc = new BMap.Geocoder();
+
+    map.centerAndZoom(xiamen,4);
+    map.addOverlay(marker);
+    marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+    marker.disableMassClear();
+
+    var options = {
+            size: BMAP_POINT_SIZE_SMALL,
+            shape: BMAP_POINT_SHAPE_STAR,
+            color: '#24936E'
+        }
+    
+    var color_car = "#8E354A"
+    var color_pacer = "#5DAC81"
+    var color_face = "#8F77B5"
+    var color_fire = "#FAD689"
+    
+	  // 用经纬度设置地图中心点
+	  function theLocation(longitude , latitude){
+      if(longitude != "" && latitude != ""){
+        map.clearOverlays(); 
+        var new_point = new BMap.Point(longitude,latitude);
+        var marker = new BMap.Marker(new_point);  // 创建标注
+        map.addOverlay(marker);              // 将标注添加到地图中
+        map.panTo(new_point);
+		  }
+	  }
+
+    function drawMap(){
+      $.ajax({url:"/data" , success:function(data){
+        
+        $("#label_car").text("车辆[" + data.count.car +"] · Loc[" + data.area.car[0] + ","+ data.area.car[1]+"]");
+        $("#label_pacer").text("行人[" + data.count.pacer +"] · Loc[" + data.area.pacer[0] + ","+ data.area.pacer[1]+"]");
+        $("#label_fire").text("火源[" + data.count.fire +"] · Loc[" + data.area.fire[0] + ","+ data.area.fire[1]+"]");
+        $("#label_face").text("人脸[" + data.count.face +"] · Loc[" + data.area.face[0] + ","+ data.area.face[1]+"]");
+
+        $('#image_car').attr("src" , data.url.car);
+        $('#image_pacer').attr("src" , data.url.pacer);
+        $('#image_fire').attr("src" , data.url.fire);
+        $('#image_face').attr("src" , data.url.face);
+
+        map.clearOverlays();
+
+        var carPosition = new BMap.Point(data.area.car[3] , data.area.car[2]);
+        var pacerPosition = new BMap.Point(data.area.pacer[3] , data.area.pacer[2]);
+        var firePosition = new BMap.Point(data.area.fire[3] , data.area.fire[2]);
+        var facePosition = new BMap.Point(data.area.face[3] , data.area.face[2]);
+
+        // save history points
+        exists_points.push(carPosition);
+        exists_points.push(pacerPosition);
+        exists_points.push(firePosition);
+        exists_points.push(facePosition);
+
+        // draw the markers
+        var marker1 = new BMap.Marker(carPosition);
+        var marker2 = new BMap.Marker(pacerPosition);
+        var marker3 = new BMap.Marker(firePosition);
+        var marker4 = new BMap.Marker(facePosition);
+        map.addOverlay(marker1); 
+        map.addOverlay(marker2); 
+        map.addOverlay(marker3); 
+        map.addOverlay(marker4);
+
+        // draw location label
+        geoc.getLocation(carPosition , function(rs){
+          var addComp = rs.addressComponents;
+          console.log(addComp);
+          var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+          marker1.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
+        });
+        geoc.getLocation(pacerPosition , function(rs){
+          var addComp = rs.addressComponents;
+          var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+          marker2.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
+        });
+        geoc.getLocation(firePosition , function(rs){
+          var addComp = rs.addressComponents;
+          var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+          marker3.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
+        });
+        geoc.getLocation(facePosition , function(rs){
+          var addComp = rs.addressComponents;
+          var label = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+          marker4.setLabel(new BMap.Label(label , {offset:new BMap.Size(20 , -10)}));
+        });
+
+        // draw the curve 
+        var curve1 = new BMapLib.CurveLine( [carPosition , xiamen] , {strokeColor : "#f8682c" , strokeWeight : 2 , strokeOpacity : 1});
+        var curve2 = new BMapLib.CurveLine( [firePosition , xiamen] , {strokeColor : "#ffc300" , strokeWeight : 2 , strokeOpacity : 1});
+        var curve3 = new BMapLib.CurveLine( [pacerPosition , xiamen] , {strokeColor : "#91c300" , strokeWeight : 2 , strokeOpacity : 1});
+        var curve4 = new BMapLib.CurveLine( [facePosition ,xiamen] , {strokeColor : "#00b4f1" , strokeWeight : 2 , strokeOpacity : 1});
+
+        map.addOverlay(curve1);
+        map.addOverlay(curve2);
+        map.addOverlay(curve3);
+        map.addOverlay(curve4);
+
+        // draw history points
+        var pointCollection = new BMap.PointCollection(exists_points, options); 
+        map.addOverlay(pointCollection)
+
+        setTimeout(window.drawMap , 2000);
+      }});
+    };
+
+    drawMap()
+</script>
+</html>
