@@ -1,6 +1,6 @@
 ## 使用环境：
 
-  * python 3.6
+* python 3.6
   * windows
   * 相关包：
     * SQlite3(python 自带)
@@ -24,21 +24,25 @@
     在文件中列出搜索图片要用的关键字 ，'#'代表注释掉
 
   3. 当前目录下 在 python环境的cmd输入
+
   ```
   python Querykeywords.py params.cfg keyword.txt
   ```
+
   开始爬取路径并下载图片<br>
   4. 当前目录下 在 python环境的cmd输入
+
   ```
   python app.py
   ```
+
   启动简易服务器<br>
   5. 根据提示打开网页(localhost:5000)进行图片下载数目查看
 
 
 ## 目录结构
 
-  * ./images : 存放图片的地方，可以在params.cfg 中进行修改
+* ./images : 存放图片的地方，可以在params.cfg 中进行修改
   * ./images/每个 keyword 对应一个文件夹
   * ./module : 搜索引擎模块
   * ./tempolate : 网页模板
@@ -48,4 +52,4 @@
 
 ## 运行网页截图
 
-  ![](static/Capture.PNG)
+  !['web preview'](static/Capture.PNG)
