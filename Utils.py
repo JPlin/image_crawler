@@ -2,17 +2,24 @@
 from PIL import Image
 from io import BytesIO, StringIO
 
+
 class Utils(object):
     QUERY_TIMEOUT = 15
     QUERY_MAX_TRAIL = 10
     QUERY_ERROR_CODE = ['SUCC', 'FAIL', 'SKIP']
 
     TOPIC_KEYWORDS = re.compile('(\w+\s?)+:(\w+\s?,?)')
-    FLICKR_STATICU = re.compile('https?://\w+\.staticflickr\.com/(\w+/)+([0-9]+)_\w+\.\w+')
+    FLICKR_STATICU = re.compile(
+        'https?://\w+\.staticflickr\.com/(\w+/)+([0-9]+)_\w+\.\w+')
 
-    HEADERS = {'user-agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', 
-               'accept-language':'en-US,en;q=0.8', 
-			   'accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' }
+    HEADERS = {
+        'user-agent':
+        'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36',
+        'accept-language':
+        'en-US,en;q=0.8',
+        'accept':
+        'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    }
 
     def __init__(self, *args, **kwargs):
         return super(Utils, self).__init__(*args, **kwargs)
@@ -28,9 +35,7 @@ class Utils(object):
     @staticmethod
     def parse_string(ln):
         ln = ln.strip()
-        if not (ln.startswith('#') 
-            or ln.isspace() 
-            or not ln):
+        if not (ln.startswith('#') or ln.isspace() or not ln):
             return ln
         else:
             return None
@@ -44,7 +49,7 @@ class Utils(object):
             ln = Utils.parse_string(ln)
             if ln:
                 idx = ln.find(':')
-                params[ln[:idx]] = r'%s'%ln[idx+1:]
+                params[ln[:idx]] = r'%s' % ln[idx + 1:]
         fb.close()
 
         return params
@@ -52,17 +57,17 @@ class Utils(object):
     @staticmethod
     def parse_keywords(fn):
         keywords = []
-        fb = open(fn, 'r' ,encoding='utf-8')
-        for ln in fb:
-            ln = Utils.parse_string(ln)
-            if ln:
-                if re.match(Utils.TOPIC_KEYWORDS, ln):
-                    idx = ln.find(':')
-                    topic, items = ln[:idx], ln[idx+1:]
-                    ln = [topic.strip()] + [x.strip() for x in items.split(',')]
-                keywords.append(ln)
-        fb.close()
-        
+        with open(fn, 'r', encoding='utf-8') as fb:
+            for ln in fb:
+                ln = Utils.parse_string(ln)
+                if ln:
+                    if re.match(Utils.TOPIC_KEYWORDS, ln):
+                        idx = ln.find(':')
+                        topic, items = ln[:idx], ln[idx + 1:]
+                        ln = [topic.strip()
+                              ] + [x.strip() for x in items.split(',')]
+                    keywords.append(ln)
+
         return keywords
 
     @staticmethod
@@ -98,7 +103,21 @@ class Utils(object):
             return None
 
         if im.format == 'JPEG':
-            return im.size + ('jpg',)
+            return im.size + ('jpg', )
         else:
             return im.size + (im.format.lower(), )
-        
+
+    @staticmethod
+    def show_status(des_dir=None):
+        if des_dir is None:
+            des_dir = input("input the selected dir:")
+        full_dir = os.path.join(os.getcwd(), des_dir)
+        dirs = os.listdir(full_dir)
+
+        dic = {}
+        sum = 0
+        for dir in dirs:
+            dic[dir] = len(os.listdir(os.path.join(full_dir, dir, 'Images')))
+            sum += dic[dir]
+        print(dic)
+        print(sum)
