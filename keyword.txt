@@ -1,10 +1,14 @@
 ## Topic Format 	: [topic]:[keyword1],[keyword1],...
 ## Keyword Format 	: keyword
 
-人脸
-行人
-火源
-车辆
+# 眼镜男
+# 眼镜女
+glasses woman
+glasses man
+# 人脸
+# 行人
+# 火源
+# 车辆
 # ID photo
 # selfie
 # figure

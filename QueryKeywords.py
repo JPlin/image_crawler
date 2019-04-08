@@ -112,7 +112,7 @@ if __name__ == '__main__':
         if int(params.get('use_getty_api', 0)) == 1:
             engines.append(GettyApi(params))
 
-        namedict = {u'人脸': 'face', u'行人': 'pacer', u'火源': 'fire', u'车辆': 'car'}
+        namedict = {u'眼镜男': 'glass_man', u'眼镜女': 'glass_woman'}
 
         p = Pool(4)
         for keyword in keywords:

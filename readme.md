@@ -1,17 +1,7 @@
 ## 使用环境：
 
 * python 3.6
-  * windows
-  * 相关包：
-    * SQlite3(python 自带)
-    * html.parser(python 自带)
-    * bs4
-    * requests
-    * PIL
-    * flask
-    * lxml
-    * maxminddb-geolite2
-    * 根据错误提示安装相应的packdage
+* pip install -r requirements.txt
 
 ## 使用方式
 
